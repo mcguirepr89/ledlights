@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Remote Control</title>
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#111827">
+    <link rel="icon" href="/static/favicon.ico">
+    <link href="/static/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white p-6 min-h-screen flex flex-col items-center">
+
+    <!-- Logo -->
+    <img src="/static/logo.png" alt="LED Logo" class="w-16 h-16 mb-4">
+
+    <h1 class="text-3xl font-bold mb-6 text-center">LED Remote Control</h1>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full max-w-md">
+        {% for cmd in commands %}
+        <button id="btn-{{ cmd }}" onclick="sendCommand('{{ cmd }}')"
+            class="command-btn {{ color_classes.get(cmd, 'bg-blue-600 hover:bg-blue-800') }} px-6 py-4 rounded-lg w-full text-lg transition-colors duration-200">
+            {{ cmd.replace('_', ' ').title() }}
+        </button>
+        {% endfor %}
+    </div>
+
+    <div id="status" class="mt-6 text-sm text-center"></div>
+
+    <script>
+        const apiKey = "{{ api_key }}";
+        let activeButton = null;
+
+        async function sendCommand(command) {
+            const response = await fetch('/api/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command: command, api_key: apiKey })
+            });
+
+            const result = await response.json();
+            const statusDiv = document.getElementById('status');
+
+            if (response.ok) {
+                statusDiv.textContent = result.status;
+                statusDiv.className = "mt-6 text-green-400 text-center";
+            } else {
+                statusDiv.textContent = result.error;
+                statusDiv.className = "mt-6 text-red-400 text-center";
+            }
+
+            // Highlight clicked button
+            if (activeButton) {
+                activeButton.classList.remove('ring-4', 'ring-yellow-400');
+            }
+            const btn = document.getElementById(`btn-${command}`);
+            btn.classList.add('ring-4', 'ring-yellow-400');
+            activeButton = btn;
+        }
+    </script>
+    <a href="https://www.flaticon.com/free-icons/remote-control" title="remote control icon">Remote control icon created by Freepik - Flaticon</a>
+</body>
+</html>
