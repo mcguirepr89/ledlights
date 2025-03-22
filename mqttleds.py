@@ -13,10 +13,14 @@ MQTT_PASSWORD = os.getenv("MQTT_PASSWORD")
 MQTT_BROKER = "localhost"
 MQTT_PORT = 1883
 
+ON_STATE = "gladys/device/mqtt:rgbleds/feature/mqtt:livingroom:rgbleds:on/state"
+HUE_STATE = "gladys/device/mqtt:rgbleds/feature/mqtt:livingroom:rgbleds:hue/state"
+
+
 # Topics
 MQTT_TOPICS = (
-    ("gladys/device/mqtt:rgbleds/feature/mqtt:livingroom:rgbleds:on/state", 0),
-    ("gladys/device/mqtt:rgbleds/feature/mqtt:livingroom:rgbleds:hue/state", 0)
+    (ON_STATE, 0),
+    (HUE_STATE, 0)
 )
 
 # Command maps
@@ -80,13 +84,13 @@ def on_message(client, userdata, msg):
     topic = msg.topic
     print(f"Received message on {topic}: {payload}")
 
-    if topic == "gladys/device/mqtt:rgbleds/feature/mqtt:livingroom:rgbleds:on/state":
+    if topic == ON_STATE:
         if payload in on_off_command_map:
             command_queue.put(on_off_command_map[payload])
         else:
             print(f"Unknown ON/OFF command: {payload}")
 
-    elif topic == "gladys/device/mqtt:rgbleds/feature/mqtt:livingroom:rgbleds:hue/state":
+    elif topic == HUE_STATE:
         try:
             color_value = int(payload)
             if color_value in color_command_map:
