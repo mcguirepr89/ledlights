@@ -11,9 +11,9 @@ API_KEY = os.getenv("API_KEY", "defaultsecret")
 
 # Available commands
 AVAILABLE_COMMANDS = [
-    "power_on", "power_off", "dimmer", "4h", "8h", "multi", "red",
-    "green", "purple", "orange", "lightgreen", "blue", "yellow",
-    "lightblue", "violet", "lightyellow", "teal", "pink"
+    "power_on", "power_off", "white_dimmer", "4h", "8h", "multi", "red",
+    "green", "purple", "orange", "light_green", "blue", "yellow",
+    "light_blue", "violet", "light_yellow", "teal", "pink"
 ]
 
 def send_lirc_command(remote, command):
@@ -22,16 +22,17 @@ def send_lirc_command(remote, command):
     client.close()
 
 color_classes = {
+    "white_dimmer": "bg-white hover:bg-white-200 text-black",
     "red": "bg-red-600 hover:bg-red-800",
     "green": "bg-green-600 hover:bg-green-800",
     "purple": "bg-purple-600 hover:bg-purple-800",
     "orange": "bg-orange-500 hover:bg-orange-700",
-    "lightgreen": "bg-green-400 hover:bg-green-600",
+    "light_green": "bg-green-400 hover:bg-green-600",
     "blue": "bg-blue-600 hover:bg-blue-800",
     "yellow": "bg-yellow-400 hover:bg-yellow-600",
-    "lightblue": "bg-sky-400 hover:bg-sky-600",
+    "light_blue": "bg-sky-400 hover:bg-sky-600",
     "violet": "bg-violet-500 hover:bg-violet-700",
-    "lightyellow": "bg-amber-300 hover:bg-amber-500",
+    "light_yellow": "bg-amber-300 hover:bg-amber-500",
     "teal": "bg-teal-500 hover:bg-teal-700",
     "pink": "bg-pink-500 hover:bg-pink-700"
 }
