@@ -1,0 +1,14 @@
+[Unit]
+Description=MQTT LED Lights
+After=network.target
+
+[Service]
+User=username
+Group=groupname
+WorkingDirectory=/home/username/ledlights
+ExecStart=/home/username/ledlights/venv/bin/python3 mqttleds.py
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

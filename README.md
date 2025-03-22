@@ -8,4 +8,4 @@ deployment
 
 Debian system needs `lircd` and you will need `pip install gunicorn`
 
-`mqttleds.py` provided for home automation POC
+`mqttleds.py` provided for home automation POC with service file
