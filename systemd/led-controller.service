@@ -1,0 +1,16 @@
+[Unit]
+Description=LED Controller Service (Flask API + MQTT)
+After=network.target
+
+[Service]
+User=username
+WorkingDirectory=/home/username/ledlights
+ExecStart=/home/username/ledlights/venv/bin/gunicorn -w 2 -b 0.0.0.0:8000 led_controller_service:create_app
+Restart=always
+Environment="PATH=/home/username/ledlights/venv/bin"
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+
