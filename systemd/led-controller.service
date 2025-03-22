@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=username
 WorkingDirectory=/home/username/ledlights
-ExecStart=/home/username/ledlights/venv/bin/gunicorn -w 2 -b 0.0.0.0:8000 led_controller_service:create_app
+ExecStart=/home/username/ledlights/venv/bin/gunicorn -w 2 -b 0.0.0.0:8000 led_controller_service:app
 Restart=always
 Environment="PATH=/home/username/ledlights/venv/bin"
 StandardOutput=journal
