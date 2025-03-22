@@ -167,10 +167,10 @@ def start_mqtt_client():
 # ------------------------------
 # Main entry point for Gunicorn
 
-def create_app():
-    start_worker_thread()  # Start the command processing in the background
-    start_mqtt_client()    # Start MQTT listener in background
-    return app
+# Create Flask app with no arguments passed to it
+start_worker_thread()  # Start the command processing in the background
+start_mqtt_client()    # Start MQTT listener in background
 
 if __name__ == "__main__":
+    app.debug = True  # Enable debug mode
     app.run(host="0.0.0.0", port=5000)
